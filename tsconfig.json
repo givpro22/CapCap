@@ -1,0 +1,31 @@
+{
+  "compilerOptions": {
+    "baseUrl": "src",
+    "paths": {
+      "@/*": ["*"],
+      "@assets/*": ["/assets/*"],
+      "@components/*": ["components/*"],
+      "@routes/*": ["routes/*"],
+      "@utils/*": ["utils/*"],
+      "@services/*": ["services/*"],
+      "@styles/*": ["styles/*"],
+      "@types/*": ["types/*"],
+      "@pages/*": ["pages/*"]
+    },
+    "jsx": "react-jsx",
+    "jsxImportSource": "@emotion/react",
+    "target": "ES2020",
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "strict": true,
+    "esModuleInterop": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "lib": ["ES2020", "DOM", "DOM.Iterable"],
+    "resolveJsonModule": true,
+    "types": ["jest", "vite-plugin-svgr/client"],
+    "outDir": "dist"
+  },
+  "include": ["src/**/*", "svg.d.ts", "setupTests.ts", "babel.config.js", "jest.config.js"],
+  "exclude": ["node_modules"]
+}

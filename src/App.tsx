@@ -3,6 +3,7 @@ import { QueryClient, QueryClientProvider } from '@tanstack/react-query'
 import { Routes } from './routes/routes'
 import { ChakraProvider, defaultSystem } from '@chakra-ui/react'
 
+// k
 const queryClient = new QueryClient()
 
 function App() {

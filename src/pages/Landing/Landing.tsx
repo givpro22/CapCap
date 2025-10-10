@@ -17,7 +17,7 @@ export const LandingPage = () => {
     <Page>
       <HeroSection id="hero-section" />
       <MainSection id="main-section" />
-      <IntroductionSection id="introduction-section" />
+      {/* <IntroductionSection id="introduction-section" /> */}
       <FeatureSection id="feature-section" />
     </Page>
   )

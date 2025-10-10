@@ -1,4 +1,3 @@
-import githubIcon from '@/assets/images/github-icon.svg'
 import Container from '@/components/common/Container/Container'
 import { MAX_CONTENT_WIDTH } from '@/styles/sizes/sizes'
 import { TextBody } from '@/components/common/Text/TextFactory'
@@ -9,39 +8,11 @@ function Footer() {
   return (
     <Container size="full-width" justify="center">
       <FooterWrapper>
-        <Container gap="12px" direction="row">
-          <Container gap="5px" direction="row" justify="center" align="flex-end">
-            <img src={githubIcon} alt="link icon" style={{ height: '20px' }} />
-            <a
-              target="_blank"
-              rel="noopener noreferrer"
-              href="https://github.com/kakao-tech-campus-2nd-step3/Team13_FE"
-              style={{
-                textDecoration: 'none',
-                color: 'black',
-              }}
-            >
-              <TextBody.Medium style={{ fontWeight: '600' }}> Github FE</TextBody.Medium>
-            </a>
-          </Container>
-
-          <Container gap="5px" direction="row" justify="center" align="flex-end">
-            <img src={githubIcon} alt="link icon" style={{ height: '20px' }} />
-            <a
-              target="_blank"
-              rel="noopener noreferrer"
-              href="https://github.com/kakao-tech-campus-2nd-step3/Team13_BE"
-              style={{
-                textDecoration: 'none',
-                color: 'black',
-              }}
-            >
-              <TextBody.Medium style={{ fontWeight: '600' }}> Github BE</TextBody.Medium>
-            </a>
-          </Container>
-        </Container>
+        <TextBody.Medium style={{ fontWeight: 700 }}>
+          Team Vibe(팀 바이브) · 산학협력 캡스톤 진행 중
+        </TextBody.Medium>
         <CopyrightWrapper>
-          <div>©Copyright 2024. 카카오테크캠퍼스 13조.</div>
+          <div>© 2025 Team Vibe — 산학협력 캡스톤 진행 중</div>
           <div>All Rights Reserved.</div>
         </CopyrightWrapper>
       </FooterWrapper>

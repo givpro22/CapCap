@@ -1,12 +1,8 @@
 import styled from '@emotion/styled'
-import AI from '@/assets/images/ai_clipboard.svg'
-import LineLogo from '@/assets/images/line_logo.svg'
-import Container from '@/components/common/Container/Container'
 import { Heading, TextBody } from '@/components/common/Text/TextFactory'
 import { breakpoints } from '@/styles/breakpoints/breakpoints'
 import { MAX_CONTENT_WIDTH } from '@/styles/sizes/sizes'
 import useIntersectionSlideEffect from '@/hooks/useIntersectionSlideEffect'
-import { colors } from '@/styles/colors/colors'
 import { useRef } from 'react'
 
 interface FeatureSectionProps {
@@ -15,106 +11,119 @@ interface FeatureSectionProps {
 
 const FeatureSection = ({ id }: FeatureSectionProps) => {
   const spyRef = useRef<HTMLDivElement>(null)
-  const spyRef2 = useRef<HTMLDivElement>(null)
-  const ai = useRef<HTMLDivElement>(null)
-  const line = useRef<HTMLDivElement>(null)
+  const g1 = useRef<HTMLDivElement>(null)
+  const g2 = useRef<HTMLDivElement>(null)
+  const g3 = useRef<HTMLDivElement>(null)
+  const g4 = useRef<HTMLDivElement>(null)
 
-  useIntersectionSlideEffect({ spyRef: spyRef, targetRef: ai, direction: 'left' })
-  useIntersectionSlideEffect({ spyRef: spyRef2, targetRef: line, direction: 'right' })
+  useIntersectionSlideEffect({ spyRef, targetRef: g1, direction: 'left' })
+  useIntersectionSlideEffect({ spyRef, targetRef: g2, direction: 'bottom', delay: 100 })
+  useIntersectionSlideEffect({ spyRef, targetRef: g3, direction: 'top', delay: 200 })
+  useIntersectionSlideEffect({ spyRef, targetRef: g4, direction: 'right', delay: 300 })
 
   return (
     <section id={id}>
-      <Container direction="column" align="center" justify="center">
-        <div ref={spyRef} />
-        <div
-          style={{
-            backgroundColor: '#f2f2f2',
-            width: '100%',
-            justifyContent: 'center',
-            alignItems: 'center',
-            display: 'flex',
-            paddingTop: '80px',
-          }}
-        >
-          <ContainerWrapper ref={ai}>
-            <TextWrapper>
-              <Heading.Medium>
-                <span style={{ color: colors.text.prominent }}>AI 요약</span>으로 더 간편한 일지
-                조회
-              </Heading.Medium>
-              <TextBody.Large style={{ lineHeight: '1.8', fontWeight: '600' }}>
-                요양보호사가 입력한 차트를 AI가 요약해줘요.
-                <br />
-                보호자는 차트를 더 편리하게 조회할 수 있어요.
-              </TextBody.Large>
-            </TextWrapper>
-            <img src={AI} alt="ai clipboard" style={{ height: '270px', width: '270px' }} />
-          </ContainerWrapper>
-        </div>
-        <div ref={spyRef2} />
-        <div
-          style={{
-            backgroundColor: '#DBE6F6',
-            width: '100%',
-            justifyContent: 'center',
-            alignItems: 'center',
-            display: 'flex',
-          }}
-        >
-          <ContainerWrapperReverse ref={line}>
-            <img src={LineLogo} alt="line logo" style={{ height: '230px', width: '230px' }} />
-            <TextWrapper>
-              <Heading.Medium>
-                <span style={{ color: colors.text.prominent }}>원하는 시간</span>에{' '}
-                <span style={{ color: colors.text.prominent }}>라인 알림</span> 받기
-              </Heading.Medium>
-              <TextBody.Large style={{ lineHeight: '1.8', fontWeight: '600' }}>
-                요양보호사가 차트를 입력하면,
-                <br />
-                지정한 시간에 라인 알림을 받을 수 있어요.
-              </TextBody.Large>
-            </TextWrapper>
-          </ContainerWrapperReverse>
-        </div>
-      </Container>
+      <Strip>
+        <SectionInner>
+          <HeaderBlock>
+            <Heading.Medium>주요 기능</Heading.Medium>
+            <TextBody.Large className="subtitle">
+              꼭 필요한 기능만 담아 더 가볍고, 더 빠르게.
+            </TextBody.Large>
+          </HeaderBlock>
+          <div ref={spyRef} />
+          <FeatureGrid>
+            <FeatureCard ref={g1} style={{ opacity: 0 }}>
+              <Icon>⌚️</Icon>
+              <Heading.Small>실시간 모니터링</Heading.Small>
+              <TextBody.Medium>
+                필요한 항목을 실시간으로 추적하고, 이상 징후를 빠르게 포착합니다.
+              </TextBody.Medium>
+            </FeatureCard>
+            <FeatureCard ref={g2} style={{ opacity: 0 }}>
+              <Icon>👩‍⚕️</Icon>
+              <Heading.Small>전문가 상담 예약</Heading.Small>
+              <TextBody.Medium>
+                원하는 시간에 간편하게 예약하고, 화상/모바일 상담으로 이어집니다.
+              </TextBody.Medium>
+            </FeatureCard>
+            <FeatureCard ref={g3} style={{ opacity: 0 }}>
+              <Icon>⏰</Icon>
+              <Heading.Small>맞춤 알림</Heading.Small>
+              <TextBody.Medium>
+                기록 시점·복용 시간 등 필요한 순간에 꼭 맞는 푸시 알림을 받습니다.
+              </TextBody.Medium>
+            </FeatureCard>
+            <FeatureCard ref={g4} style={{ opacity: 0 }}>
+              <Icon>🔒</Icon>
+              <Heading.Small>보안 & 백업</Heading.Small>
+              <TextBody.Medium>
+                민감한 건강 데이터는 안전하게 암호화되고 자동 백업됩니다.
+              </TextBody.Medium>
+            </FeatureCard>
+          </FeatureGrid>
+        </SectionInner>
+      </Strip>
     </section>
   )
 }
 
-const ContainerWrapper = styled.div`
-  display: flex;
-  padding: 80px 35px;
-  max-width: ${MAX_CONTENT_WIDTH};
-  width: 100%;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-  gap: 50px;
-  opacity: 0;
-  @media (min-width: ${breakpoints.md}) {
-    flex-direction: row;
-    justify-content: space-around;
-  }
+const Strip = styled.div`
+  background: linear-gradient(180deg, #f4fbf6, #e9fbef);
+  padding: 90px 24px;
 `
-const ContainerWrapperReverse = styled(ContainerWrapper)`
-  @media (max-width: ${breakpoints.md}) {
-    flex-direction: column-reverse;
+
+/* 중앙 정렬 고정: 콘텐츠 폭 제한 + 가운데 정렬 */
+const SectionInner = styled.div`
+  width: 100%;
+  max-width: ${MAX_CONTENT_WIDTH};
+  margin: 0 auto;
+`
+
+const HeaderBlock = styled.div`
+  text-align: center;
+  .subtitle {
+    margin-top: 8px;
+    opacity: 0.85;
   }
 `
 
-const TextWrapper = styled.div`
+const FeatureGrid = styled.div`
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 16px;
+  margin-top: 28px;
+
+  @media (min-width: ${breakpoints.md}) {
+    grid-template-columns: repeat(4, 1fr);
+    gap: 18px;
+  }
+`
+
+const FeatureCard = styled.div`
+  background: white;
+  border: 1px solid #dff3e7;
+  border-radius: 16px;
+  padding: 18px;
+  min-height: 160px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.06);
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  gap: 8px;
+`
+
+const Icon = styled.div`
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  background: #34c759;
+  display: inline-flex;
   align-items: center;
-  height: 100px;
-  gap: 15px;
-  @media (min-width: ${breakpoints.md}) {
-    gap: 37px;
-    height: 150px;
-    justify-content: start;
-    align-items: start;
-  }
+  justify-content: center;
+  font-size: 22px;
+  color: #fff;
+  box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.6);
+  user-select: none;
 `
 
 export default FeatureSection

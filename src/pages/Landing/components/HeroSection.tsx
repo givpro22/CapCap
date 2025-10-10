@@ -1,10 +1,6 @@
 import { ReactNode, useRef, useState } from 'react'
-import Button from '@/components/common/Button/Button'
-import heroImg from '@/assets/images/hero_img.svg'
-import arrowBlue from '@/assets/icons/arrow-blue.svg'
 import Container from '@/components/common/Container/Container'
 import { Heading, TextBody } from '@/components/common/Text/TextFactory'
-import { colors } from '@/styles/colors/colors'
 import styled from 'styled-components'
 import { breakpoints } from '@/styles/breakpoints/breakpoints'
 import useIntersectionSlideEffect from '@/hooks/useIntersectionSlideEffect'
@@ -12,14 +8,18 @@ import { useNavigate } from 'react-router-dom'
 
 function HeroSection({ id }: { id?: string }) {
   const navigate = useNavigate()
+
+  // intersection targets
   const spyRef = useRef<HTMLDivElement>(null)
-  const title = useRef<HTMLDivElement>(null)
-  const button = useRef<HTMLDivElement>(null)
+  const leftColRef = useRef<HTMLDivElement>(null)
+  const orbitRef = useRef<HTMLDivElement>(null)
+  const ctaRef = useRef<HTMLDivElement>(null)
 
   const [isModalOpen, setModalOpen] = useState(false)
 
-  useIntersectionSlideEffect({ spyRef: spyRef, targetRef: title, direction: 'top' })
-  useIntersectionSlideEffect({ spyRef: spyRef, targetRef: button, direction: 'bottom' })
+  useIntersectionSlideEffect({ spyRef, targetRef: leftColRef, direction: 'left' })
+  useIntersectionSlideEffect({ spyRef, targetRef: orbitRef, direction: 'right', delay: 150 })
+  useIntersectionSlideEffect({ spyRef, targetRef: ctaRef, direction: 'bottom', delay: 300 })
 
   const openModal = () => setModalOpen(true)
   const closeModal = () => setModalOpen(false)
@@ -27,74 +27,65 @@ function HeroSection({ id }: { id?: string }) {
   return (
     <section id={id}>
       <HeroContainer>
-        <Container
-          size="full-width"
-          maxWidth="100%"
-          direction="column"
-          justify="space-around"
-          align="flex-start"
-        >
+        <Container size="full-width" maxWidth="100%" direction="column" align="center">
           <div ref={spyRef} />
-          <TitleContainer ref={title}>
-            <Heading.XXLarge
-              css={{
-                color: 'white',
-                lineHeight: '1.2',
-              }}
-            >
-              안녕하세요,
-              <br />
-              돌봄다리입니다 :)
-            </Heading.XXLarge>
-          </TitleContainer>
-          <div ref={spyRef} />
-          <ButtonContainer ref={button}>
-            <HeroImage />
-            <Container
-              direction="column"
-              align="flex-start"
-              style={{ marginTop: '30px', gap: '10px' }}
-            >
-              <TextBody.MLarge css={{ color: 'white' }}>
-                이미 돌봄다리 서비스를 이용 중이시라면,
-              </TextBody.MLarge>
-              <Button
-                theme="white"
-                onClick={() => navigate('/role')}
+          <HeroContent>
+            {/* LEFT: copy + CTAs */}
+            <LeftCol ref={leftColRef}>
+              <Heading.XXLarge
                 css={{
-                  marginTop: '15px',
-                  borderRadius: '40px',
-                  width: '300px',
-                  height: '60px',
-                  display: 'flex',
-                  justifyContent: 'space-between',
-                  alignItems: 'center',
+                  color: 'white',
+                  lineHeight: '1.15',
+                  letterSpacing: '-0.02em',
                 }}
               >
-                <TextBody.Large weight="bold">서비스 이용하기</TextBody.Large>
-                <img src={arrowBlue} alt="" />
-              </Button>
-              <TextBody.MLarge css={{ marginTop: '20px', color: 'white' }}>
-                돌봄다리 서비스 신규 신청을 원하신다면,
-              </TextBody.MLarge>
-              <Button
-                theme="white"
-                onClick={openModal}
-                css={{
-                  marginTop: '15px',
-                  borderRadius: '40px',
-                  width: '300px',
-                  height: '60px',
-                  display: 'flex',
-                  justifyContent: 'space-between',
-                  alignItems: 'center',
-                }}
-              >
-                <TextBody.Large weight="bold">서비스 이용 신청</TextBody.Large>
-                <img src={arrowBlue} alt="" />
-              </Button>
-            </Container>
-          </ButtonContainer>
+                건강관리,
+                <br />
+                이제 쉽고 간편하게 ✨
+              </Heading.XXLarge>
+
+              <Subcopy>
+                EZ케어(돌봄다리)와 함께 당신의 건강을 스마트하게 관리해보세요.
+                <br />
+                전문의와의 상담부터 기록까지 한 번에!
+              </Subcopy>
+
+              <CTAGroup ref={ctaRef}>
+                <CTAButtonPrimary onClick={() => navigate('/role')}>
+                  <span className="label">서비스 시작하기</span>
+                  <span className="icon">↗︎</span>
+                </CTAButtonPrimary>
+
+                <CTAButtonSecondary onClick={openModal}>
+                  <span className="label">전문의 상담 신청</span>
+                </CTAButtonSecondary>
+              </CTAGroup>
+            </LeftCol>
+
+            {/* RIGHT: orbit illustration without images */}
+            <RightCol ref={orbitRef}>
+              <Orbit>
+                <CenterEmoji>🩺</CenterEmoji>
+                <FloatingBadge style={{ top: '-24px', left: '-14px' }}>
+                  <Em>👨‍⚕️</Em>
+                  <span>전문의 상담</span>
+                </FloatingBadge>
+                <FloatingBadge style={{ bottom: '18%', right: '-18px' }}>
+                  <Em>📊</Em>
+                  <span>건강 리포트</span>
+                </FloatingBadge>
+                <FloatingBadge style={{ top: '18%', right: '-26px' }}>
+                  <Em>🫀</Em>
+                  <span>건강 모니터링</span>
+                </FloatingBadge>
+                <FloatingBadge style={{ bottom: '-12px', left: '10%' }}>
+                  <Em>📱</Em>
+                  <span>모바일 진료</span>
+                </FloatingBadge>
+              </Orbit>
+            </RightCol>
+          </HeroContent>
+
           {isModalOpen && (
             <Modal onClose={closeModal}>
               <Heading.Medium>Contact us !</Heading.Medium>
@@ -107,77 +98,191 @@ function HeroSection({ id }: { id?: string }) {
   )
 }
 
-const TitleContainer = styled.div`
-  display: flex;
-  flex-direction: column;
+// ===== styled =====
+const HeroContainer = styled.div`
   width: 100%;
-  justify-content: center;
-  align-items: start;
-  margin-bottom: 10px;
-  padding: 0 20%;
-  box-sizing: border-box;
-  opacity: 0;
-  @media (min-width: ${breakpoints.sm}) {
-    padding-top: 70px;
-    padding-left: 200px;
-    box-sizing: border-box;
-    justify-content: start;
-    align-items: start;
-    margin-bottom: 50px;
-  }
-`
-
-const ButtonContainer = styled.div`
+  min-height: 100vh;
   display: flex;
-  flex-direction: column;
-  width: 100%;
   align-items: center;
-  justify-content: space-evenly;
-  opacity: 0;
+  justify-content: center;
+  background: linear-gradient(120deg, #5fd38b 0%, #34c759 38%, #22b887 70%);
+  position: relative;
+  overflow: hidden;
 
-  @media (min-width: ${breakpoints.sm}) {
-    flex-direction: row;
-    align-items: start;
-    width: 100%;
-    height: 500px;
+  /* decorative gradient blob */
+  &:before {
+    content: '';
+    position: absolute;
+    right: -120px;
+    top: -120px;
+    width: 420px;
+    height: 420px;
+    background: radial-gradient(closest-side, rgba(255, 255, 255, 0.25), rgba(255, 255, 255, 0));
+    filter: blur(8px);
+    border-radius: 50%;
   }
 `
 
-function HeroContainer({ children }: { children: ReactNode }) {
-  return (
-    <Container
-      size={{ width: '100%', height: '100vh' }}
-      style={{
-        backgroundSize: 'cover',
-        backgroundColor: `${colors.background.main}`,
-      }}
-      responsiveStyle={{
-        sm: {
-          height: '100vh',
-        },
-      }}
-      justify="center"
-      align="center"
-    >
-      {children}
-    </Container>
-  )
-}
+const HeroContent = styled.div`
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 40px;
+  align-items: center;
+  width: 100%;
+  max-width: 1160px;
+  padding: 80px 24px;
 
-function HeroImage() {
-  return (
-    <Container
-      size={{ width: 'auto', height: '300px' }}
-      responsiveStyle={{
-        sm: {
-          height: '500px',
-        },
-      }}
-    >
-      <img src={heroImg} alt="HeroImg" style={{ height: '100%' }} />
-    </Container>
-  )
-}
+  @media (min-width: ${breakpoints.md}) {
+    grid-template-columns: 1.15fr 1fr;
+    gap: 24px;
+  }
+`
+
+const LeftCol = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 22px;
+  opacity: 0; /* revealed by intersection hook */
+`
+
+const Subcopy = styled.p`
+  color: rgba(255, 255, 255, 0.92);
+  margin: 12px 0 0 0;
+  line-height: 1.7;
+  font-size: 18px;
+  font-weight: 600;
+`
+
+const CTAGroup = styled.div`
+  display: flex;
+  flex-direction: column;
+`
+
+const CTAButtonBase = styled.button`
+  appearance: none;
+  border: 0;
+  border-radius: 9999px;
+  width: 320px;
+  height: 64px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 22px;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  cursor: pointer;
+  transition:
+    transform 0.15s ease,
+    box-shadow 0.15s ease,
+    background-color 0.15s ease;
+  color: #ffffff;
+`
+
+const CTAButtonPrimary = styled(CTAButtonBase)`
+  background: rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(255, 255, 255, 0.45);
+  justify-content: center;
+
+  box-shadow:
+    0 6px 16px rgba(0, 0, 0, 0.12),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.1);
+  .label {
+    font-size: 18px;
+  }
+  .icon {
+    font-size: 20px;
+    opacity: 0.95;
+  }
+  &:hover {
+    background: rgba(255, 255, 255, 0.18);
+    transform: translateY(-1px);
+  }
+  &:active {
+    transform: translateY(0) scale(0.99);
+  }
+`
+
+const CTAButtonSecondary = styled(CTAButtonBase)`
+  margin-top: 14px;
+  background: rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  justify-content: center;
+  .label {
+    font-size: 18px;
+  }
+  &:hover {
+    background: rgba(255, 255, 255, 0.14);
+    transform: translateY(-1px);
+  }
+  &:active {
+    transform: translateY(0) scale(0.99);
+  }
+`
+
+const RightCol = styled.div`
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  opacity: 0; /* revealed by intersection hook */
+`
+
+const Orbit = styled.div`
+  position: relative;
+  width: 360px;
+  height: 360px;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle at 50% 50%,
+    rgba(255, 255, 255, 0.18),
+    rgba(255, 255, 255, 0.06)
+  );
+  box-shadow:
+    0 20px 60px rgba(0, 0, 0, 0.18),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.25);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  /* concentric rings */
+  &:after {
+    content: '';
+    position: absolute;
+    width: 75%;
+    height: 75%;
+    border-radius: 50%;
+    border: 2px dashed rgba(255, 255, 255, 0.35);
+  }
+
+  @media (min-width: ${breakpoints.md}) {
+    width: 460px;
+    height: 460px;
+  }
+`
+
+const CenterEmoji = styled.div`
+  font-size: 64px;
+  user-select: none;
+`
+
+const FloatingBadge = styled.div`
+  position: absolute;
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  background: white;
+  color: #111;
+  border-radius: 14px;
+  padding: 10px 14px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.15);
+  font-weight: 700;
+  white-space: nowrap;
+`
+
+const Em = styled.span`
+  font-size: 20px;
+  line-height: 1;
+`
 
 interface ModalProps {
   onClose: () => void
@@ -198,7 +303,7 @@ const Overlay = styled.div`
   left: 0;
   width: 100%;
   height: 100%;
-  background: rgba(0, 0, 0, 0.5); // Darkened overlay effect
+  background: rgba(0, 0, 0, 0.5);
   display: flex;
   align-items: center;
   justify-content: center;

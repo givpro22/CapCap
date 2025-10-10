@@ -1,15 +1,11 @@
-import arrowBlue from '@/assets/icons/arrow-blue.svg'
 import arrowWhite from '@/assets/icons/arrow-white.svg'
-import logo from '@/assets/images/logo_transparent.svg'
-import { Heading } from '@/components/common/Text/TextFactory'
-import { colors } from '@/styles/colors/colors'
+import { Heading, TextBody } from '@/components/common/Text/TextFactory'
 import styled from '@emotion/styled'
 import { useNavigate } from 'react-router-dom'
 
 interface RoleProps {
   title: string
   role: string
-  isBlue: boolean
 }
 
 export const HomePage = () => {
@@ -18,32 +14,36 @@ export const HomePage = () => {
   return (
     <WrapperBody>
       <Wrapper>
-        <LogoWrapper>
-          <img src={logo} alt="logo" style={{ width: '140px' }} onClick={() => navigate('/')} />
-        </LogoWrapper>
-        <RoleButton title="요양보호사" role="careworker" isBlue={true} />
-        <RoleButton title="보호자" role="guardian" isBlue={true} />
-        <RoleButton title="요양원" role="institution" isBlue={false} />
-        <RoleButton title="관리자" role="admin" isBlue={false} />
+        <Inner>
+          <TitleBlock>
+            <Heading.Large style={{ color: 'white' }}>역할을 선택하세요</Heading.Large>
+            <TextBody.Large style={{ color: 'rgba(255,255,255,0.92)', marginTop: 8 }}>
+              로그인할 사용자의 역할을 선택해 계속 진행합니다.
+            </TextBody.Large>
+          </TitleBlock>
+          <RoleButton title="요양보호사" role="careworker" />
+          <RoleButton title="보호자" role="guardian" />
+          <RoleButton title="요양원" role="institution" />
+          <RoleButton title="관리자" role="admin" />
+        </Inner>
       </Wrapper>
     </WrapperBody>
   )
 }
 
-const RoleButton = ({ title, role, isBlue }: RoleProps) => {
+const RoleButton = ({ title, role }: RoleProps) => {
   const navigate = useNavigate()
   localStorage.clear()
 
   return (
     <RoleWrapper
-      isBlue={isBlue}
       onClick={() => {
         localStorage.setItem('role', role)
         navigate(`/login`)
       }}
     >
-      <Heading.Medium style={{ fontWeight: '600' }}>{title} 로그인</Heading.Medium>
-      {isBlue ? <img src={arrowWhite} alt="" /> : <img src={arrowBlue} alt="" />}
+      <Heading.Medium style={{ fontWeight: '700', color: 'white' }}>{title} 로그인</Heading.Medium>
+      <img src={arrowWhite} alt="go" />
     </RoleWrapper>
   )
 }
@@ -51,52 +51,68 @@ const RoleButton = ({ title, role, isBlue }: RoleProps) => {
 const WrapperBody = styled.div`
   margin: 0;
   padding: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100%;
-`
-
-const Wrapper = styled.div`
-  width: 100%;
-  max-width: 600px;
-  position: relative;
-  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   min-height: 100vh;
   display: flex;
   justify-content: center;
   align-items: center;
-  flex-direction: column;
-  padding: 0 25px;
-  box-sizing: border-box;
-  gap: 33px;
-  @media (max-width: 600px) {
-    width: 100vw;
-    height: 100vh;
-    max-width: 100%;
-  }
+  background: #eaf7ef; /* fallback while image loads */
 `
 
-const LogoWrapper = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  gap: 25px;
-  margin: 0 10px 19px 0;
-`
-
-const RoleWrapper = styled.div<{ isBlue: boolean }>`
-  background-color: ${({ isBlue }) => (isBlue ? colors.background.main : 'white')};
-  border: ${({ isBlue }) => (isBlue ? 'none' : `2px solid ${colors.border.prominent}`)};
-  color: ${({ isBlue }) => (isBlue ? 'white' : `${colors.text.prominent}`)};
+const Wrapper = styled.div`
   width: 100%;
-  height: 100px;
-  padding: 10px 20px;
-  border-radius: 8px;
+  min-height: 100vh;
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 60px 24px;
   box-sizing: border-box;
-  margin: 4px;
-  text-align: center;
+
+  /* 사진 느낌 배경 + 그린 오버레이 */
+  background-image: linear-gradient(120deg, rgba(34, 199, 120, 0.78), rgba(34, 184, 135, 0.78)),
+    url('https://images.unsplash.com/photo-1530026186672-2cd00ffc50fe?q=80&w=1600&auto=format&fit=crop');
+  background-size: cover;
+  background-position: center;
+`
+
+const Inner = styled.div`
+  width: 100%;
+  max-width: 720px;
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  gap: 18px;
+`
+
+const TitleBlock = styled.div`
+  margin-bottom: 8px;
+`
+
+const RoleWrapper = styled.div`
+  background: rgba(255, 255, 255, 0.14);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  color: #ffffff;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  height: 88px;
+  border-radius: 18px;
+  padding: 0 20px;
   display: flex;
   justify-content: space-between;
   align-items: center;
+  box-shadow: 0 10px 28px rgba(0, 0, 0, 0.18);
+  cursor: pointer;
+  transition:
+    transform 0.15s ease,
+    background 0.15s ease,
+    box-shadow 0.15s ease;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.2);
+    transform: translateY(-2px);
+    box-shadow: 0 14px 34px rgba(0, 0, 0, 0.22);
+  }
+  &:active {
+    transform: translateY(0) scale(0.99);
+  }
 `

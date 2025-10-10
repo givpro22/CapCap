@@ -58,7 +58,6 @@ const WrapperBody = styled.div`
 
 const Wrapper = styled.div`
   width: 100%;
-  max-width: 600px;
   min-height: 100vh;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   position: relative;

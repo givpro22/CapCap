@@ -1,10 +1,9 @@
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
-import Button from '@/components/common/Button/Button'
 import { InputField } from '@/components/common/InputField/InputField'
-import { colors } from '@/styles/colors/colors'
 import styled from '@emotion/styled'
 import { AuthProvider } from '@/provider/Auth/authApi'
+import { Heading, TextBody } from '@/components/common/Text/TextFactory'
 
 export const LoginPage = () => {
   const [userId, setId] = useState('')
@@ -25,23 +24,25 @@ export const LoginPage = () => {
   }
 
   return (
-    <Wrapper>
-      <StyledForm onSubmit={login}>
+    <Screen>
+      <Overlay />
+      <LoginCard onSubmit={login}>
+        <TitleBlock>
+          <Heading.Medium>EZ케어 로그인</Heading.Medium>
+          <TextBody.Medium className="subtitle">
+            역할에 맞는 계정으로 로그인해 주세요.
+          </TextBody.Medium>
+        </TitleBlock>
+
         <div>
-          <div style={{ fontSize: '24px', fontWeight: '700', marginBottom: '10px' }}>
-            안녕하세요 :) 돌봄다리입니다.
-          </div>
           {role === 'careworker' || role === 'guardian' ? (
-            <div style={{ color: colors.primary.main, fontSize: '15px' }}>
-              전화번호와 비밀번호를 입력해주세요.
-            </div>
+            <TextBody.Small className="hint">전화번호와 비밀번호를 입력해 주세요.</TextBody.Small>
           ) : (
-            <div style={{ color: colors.primary.main, fontSize: '15px' }}>
-              아이디와 비밀번호를 입력해주세요.
-            </div>
+            <TextBody.Small className="hint">아이디와 비밀번호를 입력해 주세요.</TextBody.Small>
           )}
         </div>
-        <div>
+
+        <Fields>
           {role === 'careworker' || role === 'guardian' ? (
             <InputField
               placeholder="전화번호 ( '-' 제외)"
@@ -49,7 +50,7 @@ export const LoginPage = () => {
               name="userId"
               value={userId}
               onChange={(e) => setId(e.target.value)}
-              style={{ fontSize: '20px', marginBottom: '20px' }}
+              style={{ fontSize: '18px', height: '52px' }}
             />
           ) : (
             <InputField
@@ -58,7 +59,7 @@ export const LoginPage = () => {
               name="userId"
               value={userId}
               onChange={(e) => setId(e.target.value)}
-              style={{ fontSize: '20px', marginBottom: '20px' }}
+              style={{ fontSize: '18px', height: '52px' }}
             />
           )}
           <InputField
@@ -68,32 +69,92 @@ export const LoginPage = () => {
             type="password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
-            style={{ fontSize: '20px' }}
+            style={{ fontSize: '18px', height: '52px' }}
           />
-        </div>
-        <Button theme="dark" width="100%" height="62px" type="submit">
-          로그인
-        </Button>
-      </StyledForm>
-    </Wrapper>
+        </Fields>
+
+        <SubmitButton type="submit">로그인</SubmitButton>
+      </LoginCard>
+    </Screen>
   )
 }
 
-const Wrapper = styled.div`
+const Screen = styled.div`
+  position: relative;
+  min-height: 100vh;
   width: 100%;
-  height: calc(100vh - 50px);
   display: flex;
-  justify-content: center;
   align-items: center;
-  flex-direction: column;
+  justify-content: center;
+  padding: 40px 20px;
+  background: #eaf7ef;
+
+  /* 사진 느낌 배경 */
+  background-image: linear-gradient(120deg, rgba(34, 199, 120, 0.8), rgba(34, 184, 135, 0.8)),
+    url('https://images.unsplash.com/photo-1526256262350-7da7584cf5eb?q=80&w=1600&auto=format&fit=crop');
+  background-size: cover;
+  background-position: center;
 `
 
-const StyledForm = styled.form`
+const Overlay = styled.div`
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(800px 300px at 10% 90%, rgba(255, 255, 255, 0.18), transparent),
+    radial-gradient(600px 240px at 90% 85%, rgba(255, 255, 255, 0.18), transparent);
+`
+
+const LoginCard = styled.form`
+  position: relative;
   width: 100%;
-  height: 460px;
+  max-width: 460px;
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  border-radius: 20px;
+  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.18);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  padding: 26px 22px 22px;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
-  padding: 0 26px;
-  box-sizing: border-box;
+  gap: 16px;
+`
+
+const TitleBlock = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  .subtitle {
+    opacity: 0.8;
+  }
+`
+
+const Fields = styled.div`
+  display: grid;
+  gap: 12px;
+  margin-top: 8px;
+`
+
+const SubmitButton = styled.button`
+  margin-top: 6px;
+  height: 54px;
+  border: 0;
+  border-radius: 12px;
+  background: linear-gradient(135deg, #34c759, #22b887);
+  color: #fff;
+  font-weight: 800;
+  letter-spacing: -0.01em;
+  cursor: pointer;
+  box-shadow: 0 10px 24px rgba(34, 199, 120, 0.35);
+  transition:
+    transform 0.15s ease,
+    box-shadow 0.15s ease,
+    filter 0.15s ease;
+  &:hover {
+    transform: translateY(-1px);
+    filter: brightness(1.02);
+  }
+  &:active {
+    transform: translateY(0) scale(0.99);
+  }
 `

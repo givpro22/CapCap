@@ -89,7 +89,7 @@ function HeroSection({ id }: { id?: string }) {
           {isModalOpen && (
             <Modal onClose={closeModal}>
               <Heading.Medium>Contact us !</Heading.Medium>
-              <TextBody.Large>e-mail: halfmoonjy99@gmail.com</TextBody.Large>
+              <TextBody.Large>Team Vibe로 문의 주세요~~</TextBody.Large>
             </Modal>
           )}
         </Container>

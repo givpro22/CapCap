@@ -22,8 +22,7 @@ export const HomePage = () => {
             </TextBody.Large>
           </TitleBlock>
           <RoleButton title="요양보호사" role="careworker" />
-          <RoleButton title="보호자" role="guardian" />
-          <RoleButton title="요양원" role="institution" />
+
           <RoleButton title="관리자" role="admin" />
         </Inner>
       </Wrapper>

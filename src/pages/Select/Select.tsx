@@ -15,11 +15,7 @@ export const SelectPage = () => {
     <Wrapper>
       <ButtonWrapper>
         <Heading.Medium style={{ marginBottom: '10px' }}>관리할 항목을 선택해주세요</Heading.Medium>
-        <RoleButton title="보호자 관리 목록" navigateTo="/admin/guardian" />
         <RoleButton title="돌봄대상자 관리 목록" navigateTo="/admin/recipient" />{' '}
-        {role === 'admin' ? (
-          <RoleButton title="요양원 관리 목록" navigateTo="/admin/institution" />
-        ) : null}
         <RoleButton title="요양보호사 관리 목록" navigateTo="/admin/careWorker" />
       </ButtonWrapper>
     </Wrapper>

@@ -8,6 +8,7 @@ import bathroom from '@/assets/icons/toilet.svg'
 import wheelchair from '@/assets/icons/wheelchair.svg'
 import walking from '@/assets/icons/walking.svg'
 
+import Button from '@/components/common/Button/Button'
 import { useEffect, useState } from 'react'
 
 import { Heading } from '@/components/common/Text/TextFactory'
@@ -17,11 +18,9 @@ import { MultipleBox } from '@/components/features/MultipleChoice/MultipleBox'
 import { TimesBox } from '@/components/features/MultipleChoice/TimesBox'
 import { useNavigate } from 'react-router-dom'
 import { Chart } from '@/api/hooks/user/chart/types'
-
 interface ListWrapperProps {
   isScrolled: boolean
 }
-
 export const BodyChoicePage = () => {
   const navigate = useNavigate()
   const chartType = localStorage.getItem('chartType')
@@ -110,243 +109,148 @@ export const BodyChoicePage = () => {
   }
 
   return (
-    <Screen>
-      <Overlay />
-      <Card>
-        <HeaderArea>
-          <Steps currentStep={1} totalSteps={4} />
-          <Heading.Medium style={{ marginTop: '20px', width: '100%' }}>
-            신체 활동 지원
-          </Heading.Medium>
-        </HeaderArea>
-
-        <ContentScroll onScroll={scroll} isScrolled={isScrolled}>
-          <ChoiceGrid>
-            <GridItem>
-              <CheckBox
-                icon={waterDrop}
-                title="청결 관리"
-                checked={selectedOptions.wash}
-                onChange={() => selectOption('wash', !selectedOptions.wash)}
-              />
-            </GridItem>
-
-            <GridItem>
-              <CheckBox
-                icon={shower}
-                title="목욕"
-                checked={selectedOptions.bath}
-                onChange={() => selectOption('bath', !selectedOptions.bath)}
-              />
-            </GridItem>
-
-            <GridItem>
-              <CheckBox
-                icon={movement}
-                title="체위 변경"
-                checked={selectedOptions.positionChangeRequired}
-                onChange={() =>
-                  selectOption('positionChangeRequired', !selectedOptions.positionChangeRequired)
-                }
-              />
-            </GridItem>
-
-            <GridItem>
-              <CheckBox
-                icon={wheelchair}
-                title="이동 도움"
-                checked={selectedOptions.mobilityAssistance}
-                onChange={() =>
-                  selectOption('mobilityAssistance', !selectedOptions.mobilityAssistance)
-                }
-              />
-            </GridItem>
-
-            <GridItem>
-              <CheckBox
-                icon={walking}
-                title="산책 / 외출 동행"
-                checked={selectedOptions.hasWalked}
-                onChange={() => selectOption('hasWalked', !selectedOptions.hasWalked)}
-              />
-            </GridItem>
-
-            <GridItem>
-              <TimesBox
-                icon={bathroom}
-                title="화장실 이용 횟수"
-                count={selectedOptions.physicalRestroom}
-                onCountChange={(count) => selectOption('physicalRestroom', count.toString())}
-              />
-              {errors.physicalRestroom && <ErrorMessage>{errors.physicalRestroom}</ErrorMessage>}
-            </GridItem>
-
-            <GridItem>
-              <MultipleBox
-                icon={meal}
-                title="식사 종류"
-                options={['일반식', '죽', '유동식']}
-                selectedOption={selectedOptions.mealType}
-                onSelectOption={(option) => selectOption('mealType', option)}
-              />
-              {errors.mealType && <ErrorMessage>{errors.mealType}</ErrorMessage>}
-            </GridItem>
-
-            <GridItem>
-              <MultipleBox
-                icon={mealAmount}
-                title="섭취량"
-                options={['1 (전부)', '1/2 이상', '1/2 미만']}
-                selectedOption={selectedOptions.intakeAmount}
-                onSelectOption={(option) => selectOption('intakeAmount', option)}
-              />
-              {errors.intakeAmount && <ErrorMessage>{errors.intakeAmount}</ErrorMessage>}
-            </GridItem>
-          </ChoiceGrid>
-
-          <ButtonRow>
-            <PrimaryButton onClick={confirm}>확인</PrimaryButton>
-          </ButtonRow>
-        </ContentScroll>
-      </Card>
-    </Screen>
+    <Wrapper>
+      <TitleWrapper>
+        <Steps currentStep={1} totalSteps={4} />
+        <Heading.Medium style={{ marginTop: '26px', width: '100%' }}>신체 활동 지원</Heading.Medium>
+      </TitleWrapper>
+      <ListWrapper onScroll={scroll} isScrolled={isScrolled}>
+        <ChoiceGrid>
+          <CheckBox
+            icon={waterDrop}
+            title="청결 관리"
+            checked={selectedOptions.wash}
+            onChange={() => selectOption('wash', !selectedOptions.wash)}
+          />
+          <CheckBox
+            icon={shower}
+            title="목욕"
+            checked={selectedOptions.bath}
+            onChange={() => selectOption('bath', !selectedOptions.bath)}
+          />
+          <CheckBox
+            icon={movement}
+            title="체위 변경"
+            checked={selectedOptions.positionChangeRequired}
+            onChange={() =>
+              selectOption('positionChangeRequired', !selectedOptions.positionChangeRequired)
+            }
+          />
+          <CheckBox
+            icon={wheelchair}
+            title="이동 도움"
+            checked={selectedOptions.mobilityAssistance}
+            onChange={() => selectOption('mobilityAssistance', !selectedOptions.mobilityAssistance)}
+          />
+          <CheckBox
+            icon={walking}
+            title="산책 / 외출 동행"
+            checked={selectedOptions.hasWalked}
+            onChange={() => selectOption('hasWalked', !selectedOptions.hasWalked)}
+          />
+          <div>
+            <TimesBox
+              icon={bathroom}
+              title="화장실 이용 횟수"
+              count={selectedOptions.physicalRestroom}
+              onCountChange={(count) => selectOption('physicalRestroom', count.toString())}
+            />
+            {errors.physicalRestroom && <ErrorMessage>{errors.physicalRestroom}</ErrorMessage>}
+          </div>
+          <div>
+            <MultipleBox
+              icon={meal}
+              title="식사 종류"
+              options={['일반식', '죽', '유동식']}
+              selectedOption={selectedOptions.mealType}
+              onSelectOption={(option) => selectOption('mealType', option)}
+            />
+            {errors.mealType && <ErrorMessage>{errors.mealType}</ErrorMessage>}
+          </div>
+          <div>
+            <MultipleBox
+              icon={mealAmount}
+              title="섭취량"
+              options={['1 (전부)', '1/2 이상', '1/2 미만']}
+              selectedOption={selectedOptions.intakeAmount}
+              onSelectOption={(option) => selectOption('intakeAmount', option)}
+            />
+            {errors.intakeAmount && <ErrorMessage>{errors.intakeAmount}</ErrorMessage>}
+          </div>
+        </ChoiceGrid>
+        <ButtonWrapper>
+          <Button
+            theme="dark"
+            onClick={confirm}
+            css={{
+              width: '100%',
+              height: '62px',
+            }}
+          >
+            확인
+          </Button>
+        </ButtonWrapper>
+      </ListWrapper>
+    </Wrapper>
   )
 }
 
-// ===== styled =====
-const Screen = styled.div`
-  position: relative;
-  min-height: 100vh;
-  width: 100%;
+const Wrapper = styled.div`
+  height: 100%;
   display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: 40px 20px;
-  background: #eaf7ef;
-
-  /* 사진 느낌 배경 */
-  background-image: linear-gradient(120deg, rgba(34, 199, 120, 0.78), rgba(34, 184, 135, 0.78)),
-    url('https://images.unsplash.com/photo-1487956382158-bb926046304a?q=80&w=1800&auto=format&fit=crop');
-  background-size: cover;
-  background-position: center;
-`
-
-const Overlay = styled.div`
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  background: radial-gradient(1000px 380px at 12% 92%, rgba(255, 255, 255, 0.18), transparent),
-    radial-gradient(900px 320px at 88% 85%, rgba(255, 255, 255, 0.18), transparent);
-`
-
-const Card = styled.div`
-  position: relative;
-  width: 100%;
-  max-width: 1160px; /* ↑ 더 넓게 */
-  min-height: 70vh;
-  background: rgba(255, 255, 255, 0.9);
-  border: 1px solid rgba(255, 255, 255, 0.6);
-  border-radius: 24px;
-  backdrop-filter: blur(10px);
-  -webkit-backdrop-filter: blur(10px);
-  box-shadow: 0 20px 50px rgba(0, 0, 0, 0.18);
-  padding: 24px 22px 16px; /* ↑ 패딩 확대 */
-  display: grid;
-  grid-template-rows: auto 1fr;
-  gap: 12px; /* ↑ 간격 확대 */
-`
-
-const HeaderArea = styled.div`
-  display: flex;
+  justify-content: start;
+  align-items: start;
   flex-direction: column;
-  gap: 8px;
-  padding: 4px 6px 8px;
 `
 
-const ContentScroll = styled.div.withConfig({
-  shouldForwardProp: (prop) => !['isScrolled'].includes(prop),
-})<ListWrapperProps>`
+const TitleWrapper = styled.div`
+  padding: 0 23px;
+  margin-bottom: 15px;
   width: 100%;
-  height: calc(70vh - 120px);
-  overflow-y: auto;
-  padding: 0 8px 12px; /* ↑ 내부 여백 약간 확대 */
   box-sizing: border-box;
-  display: flex;
-  flex-direction: column;
-
-  box-shadow: ${({ isScrolled }) =>
-    isScrolled ? 'inset 0 12px 20px -12px rgba(0,0,0,0.25)' : 'none'};
-  transition: box-shadow 0.3s ease;
 `
 
 const ChoiceGrid = styled.div`
   display: grid;
-  grid-template-columns: minmax(320px, 1fr);
-  grid-auto-rows: 1fr;
-  gap: 24px;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 35px 14px;
   width: 100%;
-  justify-items: stretch;
-  align-items: stretch;
-  padding: 16px 8px 24px;
+  justify-items: center;
+  padding: 10px 0 35px 0;
   box-sizing: border-box;
 
-  @media (min-width: 768px) {
-    grid-template-columns: repeat(2, minmax(420px, 1fr));
+  @media (max-width: 300px) {
+    grid-template-columns: 1fr;
+  }
+
+  @media (min-width: 1024px) {
+    grid-template-columns: repeat(3, 1fr);
   }
 `
 
-const GridItem = styled.div`
+const ButtonWrapper = styled.div`
   width: 100%;
-  min-height: 180px; /* 모든 카드 동일 최소 높이 */
-  display: flex;
-  flex-direction: column;
-
-  /* 내부 카드가 고정 너비를 갖고 있어도 셀을 가득 채우도록 강제 */
-  & > * {
-    width: 100% !important;
-    height: 100%;
-  }
-
-  /* 에러 메시지가 있을 때 아래에 붙도록 */
-  & > ${'' /* first child is the card */} :first-child {
-    flex: 1 1 auto;
-  }
-`
-
-const ButtonRow = styled.div`
-  width: 100%;
-  padding: 0 10px 10px;
+  padding: 0 0 26px 0;
   box-sizing: border-box;
-  display: flex;
-  align-items: center;
-  justify-content: center;
   margin-top: auto;
 `
-
-const PrimaryButton = styled.button`
+const ListWrapper = styled.div.withConfig({
+  shouldForwardProp: (prop) => !['isScrolled'].includes(prop),
+})<ListWrapperProps>`
   width: 100%;
-  max-width: 520px;
-  height: 58px;
-  border: 0;
-  border-radius: 14px;
-  background: linear-gradient(135deg, #34c759, #22b887);
-  color: #fff;
-  font-weight: 800;
-  letter-spacing: -0.01em;
-  cursor: pointer;
-  box-shadow: 0 10px 24px rgba(34, 199, 120, 0.35);
-  transition:
-    transform 0.15s ease,
-    box-shadow 0.15s ease,
-    filter 0.15s ease;
 
-  &:hover {
-    transform: translateY(-1px);
-    filter: brightness(1.02);
-  }
-  &:active {
-    transform: translateY(0) scale(0.99);
-  }
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  flex-direction: column;
+  box-sizing: border-box;
+  overflow-y: auto;
+  flex-grow: 1;
+  padding: 0 23px;
+
+  box-shadow: ${({ isScrolled }) =>
+    isScrolled ? 'inset 0 10px 10px -10px rgba(0, 0, 0, 0.2)' : 'none'};
+  transition: box-shadow 0.3s ease;
 `
 
 const ErrorMessage = styled.div`

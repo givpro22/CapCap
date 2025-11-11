@@ -42,7 +42,7 @@ export const AudioRecordPage = ({ title, navigateTo }: DIYProps) => {
         <RecordSection>
           <RecordCircle>
             {listening ? (
-              <BeatLoader color="#4894FE" margin={6} size={8} />
+              <BeatLoader color="#1c7508ff" margin={6} size={8} />
             ) : (
               <img src={micImg} alt="mic" />
             )}
@@ -141,7 +141,7 @@ const Mountain1 = styled.div`
   bottom: 0;
   width: 100%;
   height: 230px;
-  background-color: #4894fe;
+  background-color: #1c7508ff;
   clip-path: ellipse(105% 90% at 50% 100%);
 `
 

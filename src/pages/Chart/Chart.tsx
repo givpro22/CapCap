@@ -24,7 +24,7 @@ export const ChartPage = () => {
 
   const navigateToRecord = () => {
     localStorage.setItem('chartType', 'record')
-    navigate('/chart/choice/body')
+    navigate('/chart/audioRecord/body')
   }
 
   const navigateToDIY = () => {

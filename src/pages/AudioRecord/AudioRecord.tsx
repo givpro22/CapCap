@@ -150,7 +150,7 @@ const Mountain2 = styled.div`
   bottom: 0;
   width: 100%;
   height: 250px;
-  background-color: #96c1ff;
+  background-color: rgb(150, 255, 199);
   clip-path: ellipse(95% 90% at 75% 100%);
 `
 
@@ -159,7 +159,7 @@ const Mountain3 = styled.div`
   bottom: 0;
   width: 100%;
   height: 270px;
-  background-color: #e4efff;
+  background-color: rgb(228, 255, 233);
   clip-path: ellipse(100% 90% at 30% 100%);
 `
 const ButtonWrapper = styled.div`
@@ -171,15 +171,17 @@ const ButtonWrapper = styled.div`
   justify-content: space-between;
   z-index: 4;
   padding: 0 25px;
+  box-sizing: border-box;
 `
 
 const TextButton = styled.div`
   font-size: 16px;
   color: white;
-  width: 44px;
+  padding: 0 10px;
   text-align: center;
   font-weight: 600;
   cursor: pointer;
+  white-space: nowrap;
 `
 
 const CenteredImage = styled.div`

@@ -33,14 +33,16 @@ export const MyPage = () => {
   }
 
   const handleUpdate = () => {
-    const updatedData = {
-      alertTime: alarmTime,
-      smsSubscription,
-      lineSubscription,
-      ...(role === 'careworker' && { workingDays }),
-    }
+    alert('회원 탈퇴가 완료되었습니다')
+    logout()
+    // const updatedData = {
+    //   alertTime: alarmTime,
+    //   smsSubscription,
+    //   lineSubscription,
+    //   ...(role === 'careworker' && { workingDays }),
+    // }
 
-    updateUserInfo(updatedData)
+    // updateUserInfo(updatedData)
   }
 
   const translateWorkingDays = (workingDays: string[]): string => {
@@ -93,7 +95,7 @@ export const MyPage = () => {
             <S.Label>연락처</S.Label>
             <S.Value>{data?.phone || ''}</S.Value>
           </S.InfoItem>
-          <S.InfoItem>
+          {/* <S.InfoItem>
             <S.Label>알림 시간</S.Label>
             <S.Value>
               <input type="time" value={alarmTime} onChange={handleTimeChange} />
@@ -140,10 +142,10 @@ export const MyPage = () => {
                 동의
               </label>
             </S.Value>
-          </S.InfoItem>
+          </S.InfoItem> */}
         </S.InfoSection>
-        <Button theme="dark" width="300px" margin="40px" onClick={handleUpdate}>
-          수정
+        <Button theme="light-outlined" width="300px" margin="40px" onClick={handleUpdate}>
+          회원탈퇴
         </Button>
       </S.Container>
     </>

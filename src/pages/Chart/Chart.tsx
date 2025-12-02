@@ -128,6 +128,7 @@ const Screen = styled.div`
   justify-content: center;
   padding: 40px 20px;
   background: #eaf7ef;
+  overflow-x: hidden;
 
   /* 사진 느낌 배경 */
   background-image: linear-gradient(120deg, rgba(34, 199, 120, 0.78), rgba(34, 184, 135, 0.78)),
@@ -177,7 +178,7 @@ const Blocks = styled.div`
 `
 
 const Row = styled.div`
-  width: 100%;
+  width: 97%;
   min-height: 120px;
   display: flex;
   align-items: center;

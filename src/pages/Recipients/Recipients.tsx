@@ -86,7 +86,7 @@ const Overlay = styled.div`
 
 const Card = styled.div`
   position: relative;
-  width: 100%;
+  width: 90%;
   max-width: 1200px;
   min-height: 70vh;
   background: rgba(255, 255, 255, 0.9);

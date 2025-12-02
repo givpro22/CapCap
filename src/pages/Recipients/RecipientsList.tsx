@@ -21,7 +21,7 @@ export const RecipientsList = ({
   picture,
   name,
   birthday,
-  width = '48px',
+  width = '40px',
   height = '48px',
   borderRadius = '50%',
 }: Props) => {
@@ -130,6 +130,7 @@ export const RecipientsList = ({
 
 const Row = styled.div`
   width: 100%;
+  box-sizing: border-box;
   min-height: 80px;
   display: flex;
   align-items: center;
@@ -152,6 +153,7 @@ const Row = styled.div`
     background: rgba(255, 255, 255, 0.72);
     box-shadow: 0 16px 32px rgba(0, 0, 0, 0.12);
   }
+  overflow-x: hidden;
 `
 
 const Left = styled.div`
